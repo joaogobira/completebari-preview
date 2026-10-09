@@ -584,7 +584,8 @@
         <link href="https://completebari.com.br/cdn/shop/t/38/assets/component-price.css?v=15667703878006296451791228503" rel="stylesheet" type="text/css" media="all" />
         <link href="https://completebari.com.br/cdn/shop/t/38/assets/component-discounts.css?v=183782683938136763491791228504" rel="stylesheet" type="text/css" media="all" />
       </noscript><link rel="preload" href="https://completebari.com.br/cdn/shop/t/38/assets/cb-fraunces-600.woff2?v=136269375141738232921791228504" as="font" type="font/woff2" crossorigin>
-      <style data-asset-local="cb-colecao.css">/* =========================================================
+      <style data-asset-local="cb-colecao.css">
+/* =========================================================
    COLEÇÃO SEO (design da coleção Multivitamínico) — seções cb-col-*
    Carregado só em templates/collection.seo-design.json (layout/theme.liquid).
    O comportamento (chips, ordenação, "Carregar mais", adicionar ao carrinho,
@@ -2359,13 +2360,26 @@
    Design Oficial Verso Company: Grafite #242426 + Verde Vital #49E395 + Lima #C4FB5A
    Totalmente responsiva: Desktop e Mobile com botão Finalizar ativo
    ========================================================= */
+/* WhatsApp sobe com transição suave quando a barra do carrinho estiver ativa */
+.whatsapp-button {
+  transition: bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+body.has-cartbar .whatsapp-button,
+.whatsapp-button.whatsapp-button--raised {
+  bottom: calc(95px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
 .pc-cartbar {
   position: fixed;
   left: 50%;
   bottom: 18px;
-  z-index: 9999;
+  z-index: 998;
   width: min(650px, calc(100% - 28px));
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 150%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   background: rgba(36, 36, 38, 0.96);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -2378,14 +2392,14 @@
   align-items: center;
   gap: 16px;
   font-family: 'General Sans', 'Plus Jakarta Sans', sans-serif;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  visibility: visible !important;
-  pointer-events: auto !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .pc-cartbar.is-visible {
   transform: translate(-50%, 0) !important;
+  opacity: 1 !important;
   visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 .pc-cartbar__info {
@@ -2433,7 +2447,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 100%;
+  width: 0%;
   border-radius: 999px;
   background: linear-gradient(90deg, #49e395 0%, #c4fb5a 100%);
   transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -2455,18 +2469,19 @@
 }
 
 .pc-cartbar__mark[data-pc-mark="ship"] {
-  left: 70%;
+  left: 60%;
 }
 
 .pc-cartbar__mark[data-pc-mark="gift"] {
-  left: 100%;
-  margin-left: -12px;
+  right: 0;
+  left: auto;
+  margin-left: 0;
 }
 
 .pc-cartbar__mark.is-hit {
-  background: #c4fb5a;
-  border-color: #242426;
-  box-shadow: 0 0 0 2px #c4fb5a;
+  background: #c4fb5a !important;
+  border-color: #242426 !important;
+  box-shadow: 0 0 0 2px #c4fb5a, 0 0 10px rgba(196, 251, 90, 0.8) !important;
 }
 
 .pc-cartbar__labels {
@@ -2481,22 +2496,25 @@
 .pc-cartbar__labels span {
   position: absolute;
   top: 0;
-  transform: translateX(-50%);
   white-space: nowrap;
+  transition: color 0.2s ease, font-weight 0.2s ease;
 }
 
 .pc-cartbar__labels span[data-pc-label="ship"] {
-  left: 70%;
+  left: 60%;
+  transform: translateX(-50%);
 }
 
 .pc-cartbar__labels span[data-pc-label="gift"] {
-  left: 100%;
-  transform: translateX(-100%);
+  right: 0;
+  left: auto;
+  transform: none;
+  text-align: right;
 }
 
 .pc-cartbar__labels span.is-hit {
-  color: #c4fb5a;
-  font-weight: 700;
+  color: #c4fb5a !important;
+  font-weight: 700 !important;
 }
 
 .pc-cartbar .pc-btn,
@@ -2539,31 +2557,49 @@
 }
 
 @media (max-width: 600px) {
+  body.has-cartbar .whatsapp-button,
+  .whatsapp-button.whatsapp-button--raised {
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+    width: 58px !important;
+    height: 58px !important;
+  }
+
   .pc-cartbar {
     width: calc(100% - 20px) !important;
+    max-width: 440px !important;
     left: 50% !important;
-    bottom: 12px !important;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
     padding: 10px 14px !important;
     gap: 10px !important;
     border-radius: 20px !important;
+    transform: translate(-50%, 150%);
+  }
+
+  .pc-cartbar.is-visible {
     transform: translate(-50%, 0) !important;
   }
+
   .pc-cartbar .pc-cartbar__btn {
     display: inline-flex !important;
     padding: 9px 15px !important;
     font-size: 12.5px !important;
     border-radius: 999px !important;
   }
+
   .pc-cartbar__msg {
     font-size: 11.5px;
   }
+
   .pc-cartbar__sub {
     font-size: 10px;
   }
+
   .pc-cartbar__track {
     height: 5px;
     margin-top: 5px;
   }
+
   .pc-cartbar__labels {
     font-size: 9.5px;
   }
@@ -2610,6 +2646,7 @@
     transition: none !important;
   }
 }
+
 </style>
       <script src="https://completebari.com.br/cdn/shop/t/38/assets/cb-primeira-compra.js?v=69685774655109834001791228504" defer="defer"></script>
       <script data-asset-local="cb-colecao.js" src="data:text/javascript;base64,LyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiAgIENPTEXDh8ODTyBTRU8g4oCUIHNlY3Rpb25zL2NiLWNvbC1jYXRhbG9nby5saXF1aWQKICAgQ2FycmVnYWRvIGNvbSBkZWZlciBzw7MgZW0gdGVtcGxhdGVzL2NvbGxlY3Rpb24uc2VvLWRlc2lnbi5qc29uLgogICBDaGlwcyBwb3IgYmxvY28gKGZpbHRyYW0gbm8gbmF2ZWdhZG9yLCBzZW0gVVJMIG5vdmEpIGUgIlZlciBtYWlzIHByb2R1dG9zIiAocmV2ZWxhIG9zIHByw7N4aW1vcykuCiAgIE9zIHByb2R1dG9zIGrDoSBlc3TDo28gdG9kb3Mgbm8gSFRNTDsgaXN0byBzw7MgbW9zdHJhIGUgZXNjb25kZS4KICAgT3JkZW5hw6fDo28sIGNhcnJpbmhvIGUgYmFycmEgZGUgZnJldGUgZmljYW0gY29tIGFzc2V0cy9jYi1wcmltZWlyYS1jb21wcmEuanMuCiAgID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwooZnVuY3Rpb24gKCkgewogICd1c2Ugc3RyaWN0JzsKCiAgY29uc3Qgcm9vdCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNiYy1jYXRhbG9nXScpOwogIGlmICghcm9vdCkgcmV0dXJuOwoKICBjb25zdCBzdGVwID0gTnVtYmVyKHJvb3QuZGF0YXNldC5zdGVwKSB8fCAxNTsKICBjb25zdCBncmlkID0gcm9vdC5xdWVyeVNlbGVjdG9yKCdbZGF0YS1wYy1ncmlkXScpOwogIGNvbnN0IGNoaXBzID0gcm9vdC5xdWVyeVNlbGVjdG9yKCdbZGF0YS1jYmMtY2hpcHNdJyk7CiAgY29uc3QgbW9yZVRleHQgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNiYy1tb3JlLXRleHRdJyk7CiAgY29uc3QgbW9yZUJhciA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2JjLW1vcmUtYmFyXScpOwogIGNvbnN0IG1vcmVCdG4gPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNiYy1tb3JlXScpOwogIGxldCBhY3RpdmUgPSAnJzsKICBsZXQgbGltaXQgPSBzdGVwOwoKICBmdW5jdGlvbiBpdGVtcygpIHsKICAgIHJldHVybiBBcnJheS5mcm9tKGdyaWQucXVlcnlTZWxlY3RvckFsbCgnOnNjb3BlID4gbGlbZGF0YS1jYmMtdGFnc10nKSk7CiAgfQoKICBmdW5jdGlvbiBhcHBseShmb2N1c0Zyb20pIHsKICAgIGNvbnN0IGFsbCA9IGl0ZW1zKCk7CiAgICBjb25zdCBtYXRjaCA9IGFsbC5maWx0ZXIoKGxpKSA9PiAhYWN0aXZlIHx8IGxpLmRhdGFzZXQuY2JjVGFncy5pbmRleE9mKCcgJyArIGFjdGl2ZSArICcgJykgIT09IC0xKTsKICAgIGNvbnN0IHZpc2libGUgPSBNYXRoLm1pbihsaW1pdCwgbWF0Y2gubGVuZ3RoKTsKCiAgICBhbGwuZm9yRWFjaCgobGkpID0+IHsKICAgICAgbGkuaGlkZGVuID0gdHJ1ZTsKICAgIH0pOwogICAgbWF0Y2guc2xpY2UoMCwgdmlzaWJsZSkuZm9yRWFjaCgobGksIGkpID0+IHsKICAgICAgbGkuaGlkZGVuID0gZmFsc2U7CiAgICAgIGNvbnN0IGNhcmQgPSBsaS5maXJzdEVsZW1lbnRDaGlsZDsKICAgICAgaWYgKGNhcmQpIGNhcmQuc3R5bGUuc2V0UHJvcGVydHkoJy0taScsIFN0cmluZyhpICUgc3RlcCkpOwogICAgfSk7CgogICAgaWYgKG1vcmVUZXh0KSBtb3JlVGV4dC50ZXh0Q29udGVudCA9IGBNb3N0cmFuZG8gJHt2aXNpYmxlfSBkZSAke21hdGNoLmxlbmd0aH0gcHJvZHV0b3NgOwogICAgaWYgKG1vcmVCYXIpIG1vcmVCYXIuc3R5bGUud2lkdGggPSAobWF0Y2gubGVuZ3RoID8gKHZpc2libGUgLyBtYXRjaC5sZW5ndGgpICogMTAwIDogMTAwKSArICclJzsKICAgIGlmIChtb3JlQnRuKSBtb3JlQnRuLmhpZGRlbiA9IHZpc2libGUgPj0gbWF0Y2gubGVuZ3RoOwoKICAgIC8vIGxldmEgbyBmb2NvIHBhcmEgbyBwcmltZWlybyBwcm9kdXRvIG5vdm8sIHBhcmEgcXVlbSBuYXZlZ2EgcGVsbyB0ZWNsYWRvCiAgICBpZiAodHlwZW9mIGZvY3VzRnJvbSA9PT0gJ251bWJlcicgJiYgbWF0Y2hbZm9jdXNGcm9tXSkgewogICAgICBjb25zdCBsaW5rID0gbWF0Y2hbZm9jdXNGcm9tXS5xdWVyeVNlbGVjdG9yKCdoMyBhJyk7CiAgICAgIGlmIChsaW5rKSBsaW5rLmZvY3VzKHsgcHJldmVudFNjcm9sbDogdHJ1ZSB9KTsKICAgIH0KICB9CgogIGlmIChjaGlwcykgewogICAgY2hpcHMuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCAoZXZlbnQpID0+IHsKICAgICAgY29uc3QgY2hpcCA9IGV2ZW50LnRhcmdldC5jbG9zZXN0KCdbZGF0YS1jYmMtY2hpcF0nKTsKICAgICAgaWYgKCFjaGlwKSByZXR1cm47CiAgICAgIGFjdGl2ZSA9IGNoaXAuZGF0YXNldC5jYmNDaGlwOwogICAgICBsaW1pdCA9IHN0ZXA7CiAgICAgIGNoaXBzLnF1ZXJ5U2VsZWN0b3JBbGwoJ1tkYXRhLWNiYy1jaGlwXScpLmZvckVhY2goKGMpID0+IHsKICAgICAgICBjb25zdCBvbiA9IGMgPT09IGNoaXA7CiAgICAgICAgYy5jbGFzc0xpc3QudG9nZ2xlKCdpcy1vbicsIG9uKTsKICAgICAgICBjLnNldEF0dHJpYnV0ZSgnYXJpYS1wcmVzc2VkJywgb24gPyAndHJ1ZScgOiAnZmFsc2UnKTsKICAgICAgfSk7CiAgICAgIGFwcGx5KCk7CiAgICB9KTsKICB9CgogIGlmIChtb3JlQnRuKSB7CiAgICBtb3JlQnRuLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJywgKCkgPT4gewogICAgICBjb25zdCBmcm9tID0gbGltaXQ7CiAgICAgIGxpbWl0ICs9IHN0ZXA7CiAgICAgIGFwcGx5KGZyb20pOwogICAgfSk7CiAgfQoKICAvLyBBIG9yZGVuYcOnw6NvIHRyb2NhIGEgZ3JhZGUgaW50ZWlyYSAoU2VjdGlvbiBSZW5kZXJpbmcgQVBJKTogcmVhcGxpY2EgbyBjaGlwIGUgbyAidmVyIG1haXMiCiAgbmV3IE11dGF0aW9uT2JzZXJ2ZXIoKCkgPT4gYXBwbHkoKSkub2JzZXJ2ZShncmlkLCB7IGNoaWxkTGlzdDogdHJ1ZSB9KTsKCiAgYXBwbHkoKTsKfSkoKTsK" defer></script>
@@ -6974,7 +7011,7 @@ function openHeaderSearch() {
         <button type="button" class="cbc-btn cbc-btn--ghost" data-cbc-more>Ver mais produtos</button></div>
     </div>
   </section><div
-  class="pc-cartbar is-visible"
+  class="pc-cartbar"
   id="PcCartbar"
   role="region"
   aria-label="Progresso do carrinho"
@@ -9394,10 +9431,10 @@ SmartifyAppDECO.__configReady = true;
 (function() {
   'use strict';
   
-  // Estado inicial do carrinho (demonstrando meta batida como no print /primeira-compra)
+  // Estado inicial do carrinho: vazio na carga inicial (a barra fica oculta)
   var cartState = {
-    subtotal: 1736.55,
-    itemsCount: 4,
+    subtotal: 0,
+    itemsCount: 0,
     freeShipThreshold: 299.00,
     giftThreshold: 399.00,
     couponCode: 'PRIMEIRA10',
@@ -9422,28 +9459,44 @@ SmartifyAppDECO.__configReady = true;
     var subtotal = cartState.subtotal;
     var discounted = subtotal * (1 - cartState.couponDiscount);
 
-    // Calcular percentual da barra: 0% a 70% = Frete (R$ 299), 70% a 100% = Brinde (R$ 399)
+    // Calcular percentual da barra:
+    // 0 até 299 -> 0% até 60% (Frete Grátis)
+    // 299 até 399 -> 60% até 100% (Brinde Surpresa)
     var pct = 0;
-    if (subtotal < cartState.freeShipThreshold) {
-      pct = (subtotal / cartState.freeShipThreshold) * 70;
+    if (subtotal <= 0) {
+      pct = 0;
+    } else if (subtotal < cartState.freeShipThreshold) {
+      pct = (subtotal / cartState.freeShipThreshold) * 60;
     } else if (subtotal < cartState.giftThreshold) {
       var diff = subtotal - cartState.freeShipThreshold;
       var range = cartState.giftThreshold - cartState.freeShipThreshold;
-      pct = 70 + (diff / range) * 30;
+      pct = 60 + (diff / range) * 40;
     } else {
       pct = 100;
     }
-    pct = Math.min(100, Math.max(8, pct));
+    pct = Math.min(100, Math.max(0, pct));
 
     if (fillEl) fillEl.style.width = pct + '%';
 
     var freeShipHit = subtotal >= cartState.freeShipThreshold;
     var giftHit = subtotal >= cartState.giftThreshold;
 
-    if (shipMark) shipMark.classList.toggle('is-hit', freeShipHit);
-    if (giftMark) giftMark.classList.toggle('is-hit', giftHit);
-    if (shipLabel) shipLabel.classList.toggle('is-hit', freeShipHit);
-    if (giftLabel) giftLabel.classList.toggle('is-hit', giftHit);
+    if (shipMark) {
+      shipMark.style.left = '60%';
+      shipMark.classList.toggle('is-hit', freeShipHit);
+    }
+    if (giftMark) {
+      giftMark.style.left = '100%';
+      giftMark.classList.toggle('is-hit', giftHit);
+    }
+    if (shipLabel) {
+      shipLabel.style.left = '60%';
+      shipLabel.classList.toggle('is-hit', freeShipHit);
+    }
+    if (giftLabel) {
+      giftLabel.style.left = '100%';
+      giftLabel.classList.toggle('is-hit', giftHit);
+    }
 
     // Mensagem dinâmica de celebração de metas
     var messageHtml = '';
@@ -9454,7 +9507,7 @@ SmartifyAppDECO.__configReady = true;
       messageHtml = 'Você liberou <b>frete grátis</b>! Falta <b>' + formatMoney(faltaBrinde) + '</b> para o <b>brinde</b> 🎁';
     } else {
       var faltaFrete = cartState.freeShipThreshold - subtotal;
-      messageHtml = 'Adicione mais <b>' + formatMoney(faltaFrete) + '</b> para ganhar <b>frete grátis</b> 🚚';
+      messageHtml = 'Faltam <b>' + formatMoney(faltaFrete) + '</b> para o <b>frete grátis</b> 🚚';
     }
 
     var subtextHtml = '<span class="pc-cartbar__sub">Subtotal ' + formatMoney(subtotal) + ' · com cupom <b>' + formatMoney(discounted) + '</b></span>';
@@ -9463,9 +9516,26 @@ SmartifyAppDECO.__configReady = true;
       msgEl.innerHTML = messageHtml + subtextHtml;
     }
 
-    bar.classList.add('is-visible');
-    bar.removeAttribute('inert');
-    bar.setAttribute('aria-hidden', 'false');
+    // Só exibe a barra se houver itens adicionados
+    if (cartState.itemsCount > 0) {
+      bar.classList.add('is-visible');
+      bar.removeAttribute('inert');
+      bar.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('has-cartbar');
+      var wa = document.getElementById('whatsapp-button') || document.querySelector('.whatsapp-button');
+      if (wa) {
+        wa.classList.add('whatsapp-button--raised');
+      }
+    } else {
+      bar.classList.remove('is-visible');
+      bar.setAttribute('inert', '');
+      bar.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('has-cartbar');
+      var wa2 = document.getElementById('whatsapp-button') || document.querySelector('.whatsapp-button');
+      if (wa2) {
+        wa2.classList.remove('whatsapp-button--raised');
+      }
+    }
   }
 
   // Interceptar cliques em botões "Comprar" ou adicionar à sacola
@@ -9493,16 +9563,12 @@ SmartifyAppDECO.__configReady = true;
     renderGamificationBar();
 
     // Disparar toast de confirmação
-    if (window.cbPc && typeof window.cbPc.toast === 'function') {
-      window.cbPc.toast('Produto adicionado à sacola!');
-    } else {
-      var toast = document.querySelector('.pc-toast');
-      if (toast) {
-        var span = toast.querySelector('span') || toast;
-        span.textContent = 'Produto adicionado à sacola!';
-        toast.classList.add('is-visible');
-        setTimeout(function() { toast.classList.remove('is-visible'); }, 2500);
-      }
+    var toast = document.querySelector('.pc-toast');
+    if (toast) {
+      var span = toast.querySelector('span') || toast;
+      span.textContent = 'Produto adicionado à sacola!';
+      toast.classList.add('is-visible');
+      setTimeout(function() { toast.classList.remove('is-visible'); }, 2500);
     }
   });
 
@@ -9521,7 +9587,7 @@ SmartifyAppDECO.__configReady = true;
     }
   });
 
-  // Inicializar renderização no carregamento da página
+  // Na inicialização: não mostra a barra se não houver itens
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', renderGamificationBar);
   } else {
@@ -9529,6 +9595,5 @@ SmartifyAppDECO.__configReady = true;
   }
 })();
 </script>
-
 </body>
 </html>

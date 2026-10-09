@@ -16,6 +16,11 @@
 <!doctype html>
 <html class="js" lang="pt-BR">
   <head>
+    <!-- Brandbook Verso Company: Fraunces & Plus Jakarta Sans / General Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <meta name="robots" content="noindex, nofollow">
  
 <meta name="google-site-verification" content="5WS9tb3o45fyQqqJKQdR36Yqo7l9582hR3nkSehWOfs">
@@ -604,19 +609,24 @@
 .cb-col,
 .pc-cartbar,
 .pc-toast {
+  --verde: #49e395;
+  --green: #49e395;
+  --grafite: #242426;
   --ink: #242426;
-  --ink-2: #4b4b4b;
-  --muted: #6e6a5e;
-  --surface: #f9f7f1;
-  --stage: #f1f0eb;
-  --line: #e4e0d5;
-  --card-border: #dcd5c2;
+  --ink-2: #2e2e30;
+  --muted: #7c7c80;
+  --surface: #f7f7f4;
+  --stage: #f7f7f4;
+  --line: rgba(36, 36, 38, 0.12);
+  --line-soft: rgba(36, 36, 38, 0.07);
+  --card-border: rgba(36, 36, 38, 0.1);
   --lime: #c4fb5a;
-  --lime-soft: #dffda4;
-  --lime-border: #a3d94b;
-  --lime-ink: #1f3b0e;
-  --green: #437f1c;
+  --lime-soft: #e7fdba;
+  --lime-border: #c4fb5a;
+  --lime-ink: #242426;
   --pink: #fa78dc;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'General Sans', 'Plus Jakarta Sans', -apple-system, sans-serif;
   --star: #e0a100;
   --r-lg: 24px;
   --r-md: 16px;
@@ -944,7 +954,9 @@
 .cbc-hero__stage--stats {
   position: relative;
   min-height: 420px;
-  background: linear-gradient(145deg, #1C4D1D 0%, #103312 100%);
+  background: linear-gradient(145deg, #242426 0%, #161618 100%);
+  border: 1px solid rgba(73, 227, 149, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2342,30 +2354,38 @@
    BARRA DO CARRINHO (frete grátis / brinde) e TOAST
    Marcação em snippets/cb-pc-cartbar.liquid; comportamento em cb-primeira-compra.js.
    ========================================================= */
+/* =========================================================
+   BARRA FLUTUANTE DE GAMIFICAÇÃO (MODELO VALIDADO /PRIMEIRA-COMPRA)
+   Design Oficial Verso Company: Grafite #242426 + Verde Vital #49E395 + Lima #C4FB5A
+   Totalmente responsiva: Desktop e Mobile com botão Finalizar ativo
+   ========================================================= */
 .pc-cartbar {
   position: fixed;
   left: 50%;
-  bottom: 16px;
-  z-index: 55;
-  width: min(620px, calc(100% - 96px));
-  transform: translate(-50%, 150%);
-  visibility: hidden;
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0.45s;
-  background: var(--ink);
-  color: #fff;
-  border-radius: 16px;
-  padding: 12px 14px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
-  display: flex;
+  bottom: 18px;
+  z-index: 9999;
+  width: min(650px, calc(100% - 28px));
+  transform: translate(-50%, 0);
+  background: rgba(36, 36, 38, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 12px 18px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(73, 227, 149, 0.2);
+  display: flex !important;
   align-items: center;
-  gap: 14px;
-  font-family: var(--font);
+  gap: 16px;
+  font-family: 'General Sans', 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 .pc-cartbar.is-visible {
-  transform: translate(-50%, 0);
-  visibility: visible;
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s;
+  transform: translate(-50%, 0) !important;
+  visibility: visible !important;
 }
 
 .pc-cartbar__info {
@@ -2375,27 +2395,37 @@
 
 .pc-cartbar__msg {
   margin: 0;
-  font-size: 13px;
-  line-height: 1.35;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #ffffff;
 }
 
-.pc-cartbar__msg b {
-  color: var(--lime);
+.pc-cartbar__msg b,
+.pc-cartbar__msg strong {
+  color: #49e395;
+  font-weight: 800;
 }
 
 .pc-cartbar__sub {
   display: block;
   font-size: 11.5px;
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.72);
   margin-top: 2px;
+}
+
+.pc-cartbar__sub b {
+  color: #c4fb5a;
+  font-weight: 700;
 }
 
 .pc-cartbar__track {
   position: relative;
   height: 6px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.16);
-  margin-top: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  margin-top: 7px;
+  overflow: visible;
 }
 
 .pc-cartbar__fill {
@@ -2403,27 +2433,40 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 0;
-  border-radius: 6px;
-  background: var(--lime);
-  transition: width 0.5s;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #49e395 0%, #c4fb5a 100%);
+  transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 0 8px rgba(73, 227, 149, 0.6);
 }
 
 .pc-cartbar__mark {
   position: absolute;
   top: 50%;
-  width: 10px;
-  height: 10px;
-  margin-left: -5px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
   border-radius: 50%;
-  background: var(--ink);
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: #242426;
+  border: 2px solid rgba(255, 255, 255, 0.6);
   transform: translateY(-50%);
+  z-index: 2;
+  transition: all 0.25s ease;
+}
+
+.pc-cartbar__mark[data-pc-mark="ship"] {
+  left: 70%;
+}
+
+.pc-cartbar__mark[data-pc-mark="gift"] {
+  left: 100%;
+  margin-left: -12px;
 }
 
 .pc-cartbar__mark.is-hit {
-  background: var(--lime);
-  border-color: var(--lime);
+  background: #c4fb5a;
+  border-color: #242426;
+  box-shadow: 0 0 0 2px #c4fb5a;
 }
 
 .pc-cartbar__labels {
@@ -2431,7 +2474,8 @@
   height: 14px;
   margin-top: 4px;
   font-size: 10.5px;
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
 }
 
 .pc-cartbar__labels span {
@@ -2441,27 +2485,87 @@
   white-space: nowrap;
 }
 
-.pc-cartbar__labels span:last-child {
+.pc-cartbar__labels span[data-pc-label="ship"] {
+  left: 70%;
+}
+
+.pc-cartbar__labels span[data-pc-label="gift"] {
   left: 100%;
   transform: translateX(-100%);
 }
 
-.pc-cartbar .pc-btn {
-  padding: 10px 14px;
-  font-size: 13px;
+.pc-cartbar__labels span.is-hit {
+  color: #c4fb5a;
+  font-weight: 700;
 }
 
-@media (max-width: 560px) {
+.pc-cartbar .pc-btn,
+.pc-cartbar__btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 22px !important;
+  border-radius: 999px !important;
+  background: #c4fb5a !important;
+  color: #242426 !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  flex: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(196, 251, 90, 0.35);
+}
+
+.pc-cartbar .pc-btn:hover,
+.pc-cartbar__btn:hover {
+  background: #49e395 !important;
+  transform: scale(1.04);
+  box-shadow: 0 6px 18px rgba(73, 227, 149, 0.4);
+}
+
+.pc-cartbar__btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: #242426;
+  stroke-width: 2.5;
+  transition: transform 0.2s;
+}
+
+.pc-cartbar__btn:hover svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 600px) {
   .pc-cartbar {
-    left: 10px;
-    width: calc(100% - 86px);
-    transform: translateY(150%);
-  }
-  .pc-cartbar.is-visible {
-    transform: none;
+    width: calc(100% - 20px) !important;
+    left: 50% !important;
+    bottom: 12px !important;
+    padding: 10px 14px !important;
+    gap: 10px !important;
+    border-radius: 20px !important;
+    transform: translate(-50%, 0) !important;
   }
   .pc-cartbar .pc-cartbar__btn {
-    display: none;
+    display: inline-flex !important;
+    padding: 9px 15px !important;
+    font-size: 12.5px !important;
+    border-radius: 999px !important;
+  }
+  .pc-cartbar__msg {
+    font-size: 11.5px;
+  }
+  .pc-cartbar__sub {
+    font-size: 10px;
+  }
+  .pc-cartbar__track {
+    height: 5px;
+    margin-top: 5px;
+  }
+  .pc-cartbar__labels {
+    font-size: 9.5px;
   }
 }
 
@@ -4330,7 +4434,7 @@
   --complete-card-border: #b0ada2;
   --complete-card-accent: #c4fb5a;
   --complete-card-accent-soft: #e1fdac;
-  --complete-card-accent-text: #437f1c;
+  --complete-card-accent-text: #242426;
   --complete-card-text: #242426;
   --complete-card-text-muted: #6e6a5e;
   background: var(--complete-card-surface);
@@ -5888,8 +5992,8 @@ function openHeaderSearch() {
   }
 
   .menu-link:hover {
-    color: #3f642d;
-    border-color: #3f642d;
+    color: #49e395;
+    border-color: #49e395;
   }
 
   .menu-link.is-active {
@@ -6870,18 +6974,16 @@ function openHeaderSearch() {
         <button type="button" class="cbc-btn cbc-btn--ghost" data-cbc-more>Ver mais produtos</button></div>
     </div>
   </section><div
-  class="pc-cartbar"
+  class="pc-cartbar is-visible"
   id="PcCartbar"
   role="region"
   aria-label="Progresso do carrinho"
   data-pc-cartbar
   data-free-ship="29900"
   data-gift="39900"
-  data-percent="0"
-  data-coupon=""
+  data-percent="100"
+  data-coupon="PRIMEIRA10"
   data-currency="BRL"
-  aria-hidden="true"
-  inert
 >
   <div class="pc-cartbar__info">
     <p class="pc-cartbar__msg" data-pc-cart-msg aria-live="polite"></p>
@@ -9286,5 +9388,147 @@ SmartifyAppDECO.__configReady = true;
 <script>
   (function(){var c=document.getElementById('cb-destacar');if(!c)return;c.addEventListener('change',function(){document.body.classList.toggle('cb-destacar',c.checked)});})();
 </script>
+
+<!-- ENGINE INTERATIVA DA BARRA DE GAMIFICAÇÃO & CARRINHO (CompleteBari Preview) -->
+<script>
+(function() {
+  'use strict';
+  
+  // Estado inicial do carrinho (demonstrando meta batida como no print /primeira-compra)
+  var cartState = {
+    subtotal: 1736.55,
+    itemsCount: 4,
+    freeShipThreshold: 299.00,
+    giftThreshold: 399.00,
+    couponCode: 'PRIMEIRA10',
+    couponDiscount: 0.10 // 10% OFF
+  };
+
+  function formatMoney(val) {
+    return 'R$ ' + val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function renderGamificationBar() {
+    var bar = document.getElementById('PcCartbar');
+    if (!bar) return;
+
+    var msgEl = bar.querySelector('[data-pc-cart-msg]');
+    var fillEl = bar.querySelector('[data-pc-cart-fill]');
+    var shipMark = bar.querySelector('[data-pc-mark="ship"]');
+    var giftMark = bar.querySelector('[data-pc-mark="gift"]');
+    var shipLabel = bar.querySelector('[data-pc-label="ship"]');
+    var giftLabel = bar.querySelector('[data-pc-label="gift"]');
+
+    var subtotal = cartState.subtotal;
+    var discounted = subtotal * (1 - cartState.couponDiscount);
+
+    // Calcular percentual da barra: 0% a 70% = Frete (R$ 299), 70% a 100% = Brinde (R$ 399)
+    var pct = 0;
+    if (subtotal < cartState.freeShipThreshold) {
+      pct = (subtotal / cartState.freeShipThreshold) * 70;
+    } else if (subtotal < cartState.giftThreshold) {
+      var diff = subtotal - cartState.freeShipThreshold;
+      var range = cartState.giftThreshold - cartState.freeShipThreshold;
+      pct = 70 + (diff / range) * 30;
+    } else {
+      pct = 100;
+    }
+    pct = Math.min(100, Math.max(8, pct));
+
+    if (fillEl) fillEl.style.width = pct + '%';
+
+    var freeShipHit = subtotal >= cartState.freeShipThreshold;
+    var giftHit = subtotal >= cartState.giftThreshold;
+
+    if (shipMark) shipMark.classList.toggle('is-hit', freeShipHit);
+    if (giftMark) giftMark.classList.toggle('is-hit', giftHit);
+    if (shipLabel) shipLabel.classList.toggle('is-hit', freeShipHit);
+    if (giftLabel) giftLabel.classList.toggle('is-hit', giftHit);
+
+    // Mensagem dinâmica de celebração de metas
+    var messageHtml = '';
+    if (giftHit) {
+      messageHtml = 'Você liberou <b>frete grátis</b> e <b>brinde surpresa</b> 🎉';
+    } else if (freeShipHit) {
+      var faltaBrinde = cartState.giftThreshold - subtotal;
+      messageHtml = 'Você liberou <b>frete grátis</b>! Falta <b>' + formatMoney(faltaBrinde) + '</b> para o <b>brinde</b> 🎁';
+    } else {
+      var faltaFrete = cartState.freeShipThreshold - subtotal;
+      messageHtml = 'Adicione mais <b>' + formatMoney(faltaFrete) + '</b> para ganhar <b>frete grátis</b> 🚚';
+    }
+
+    var subtextHtml = '<span class="pc-cartbar__sub">Subtotal ' + formatMoney(subtotal) + ' · com cupom <b>' + formatMoney(discounted) + '</b></span>';
+
+    if (msgEl) {
+      msgEl.innerHTML = messageHtml + subtextHtml;
+    }
+
+    bar.classList.add('is-visible');
+    bar.removeAttribute('inert');
+    bar.setAttribute('aria-hidden', 'false');
+  }
+
+  // Interceptar cliques em botões "Comprar" ou adicionar à sacola
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.cbc-btn--buy, [data-pc-add], .product-form__submit');
+    if (!btn) return;
+    
+    e.preventDefault();
+    
+    // Animação imediata de feedback no botão
+    var originalText = btn.innerHTML;
+    btn.innerHTML = '<span>✓ Adicionado!</span>';
+    btn.style.background = '#49e395';
+    btn.style.color = '#242426';
+
+    setTimeout(function() {
+      btn.innerHTML = originalText;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1200);
+
+    // Incrementar subtotal do carrinho simulado
+    cartState.subtotal += 129.90;
+    cartState.itemsCount += 1;
+    renderGamificationBar();
+
+    // Disparar toast de confirmação
+    if (window.cbPc && typeof window.cbPc.toast === 'function') {
+      window.cbPc.toast('Produto adicionado à sacola!');
+    } else {
+      var toast = document.querySelector('.pc-toast');
+      if (toast) {
+        var span = toast.querySelector('span') || toast;
+        span.textContent = 'Produto adicionado à sacola!';
+        toast.classList.add('is-visible');
+        setTimeout(function() { toast.classList.remove('is-visible'); }, 2500);
+      }
+    }
+  });
+
+  // Ação do botão Finalizar: abrir gaveta ou redirecionar
+  document.addEventListener('click', function(e) {
+    var finishBtn = e.target.closest('.pc-cartbar__btn, [data-pc-cartbar] a');
+    if (!finishBtn) return;
+
+    var drawer = document.querySelector('cart-drawer');
+    if (drawer && typeof drawer.open === 'function') {
+      e.preventDefault();
+      drawer.open();
+    } else if (drawer) {
+      e.preventDefault();
+      drawer.classList.add('active');
+    }
+  });
+
+  // Inicializar renderização no carregamento da página
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderGamificationBar);
+  } else {
+    renderGamificationBar();
+  }
+})();
+</script>
+
 </body>
 </html>

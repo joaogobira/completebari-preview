@@ -2367,15 +2367,15 @@
 
 body.has-cartbar .whatsapp-button,
 .whatsapp-button.whatsapp-button--raised {
-  bottom: calc(95px + env(safe-area-inset-bottom, 0px)) !important;
+  bottom: calc(125px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .pc-cartbar {
   position: fixed;
   left: 50%;
-  bottom: 18px;
+  bottom: 16px;
   z-index: 998;
-  width: min(650px, calc(100% - 28px));
+  width: min(540px, calc(100% - 24px));
   transform: translate(-50%, 150%);
   opacity: 0;
   visibility: hidden;
@@ -2385,12 +2385,18 @@ body.has-cartbar .whatsapp-button,
   -webkit-backdrop-filter: blur(20px);
   color: #ffffff;
   border: 1.5px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  padding: 12px 18px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(73, 227, 149, 0.2);
-  display: flex !important;
+  border-radius: 24px;
+  padding: 14px 18px 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(73, 227, 149, 0.2);
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "msg btn"
+    "track track"
+    "labels labels";
+  row-gap: 10px;
+  column-gap: 14px;
   align-items: center;
-  gap: 16px;
   font-family: 'General Sans', 'Plus Jakarta Sans', sans-serif;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease;
 }
@@ -2403,11 +2409,11 @@ body.has-cartbar .whatsapp-button,
 }
 
 .pc-cartbar__info {
-  flex: 1;
-  min-width: 0;
+  display: contents !important;
 }
 
 .pc-cartbar__msg {
+  grid-area: msg;
   margin: 0;
   font-size: 13.5px;
   font-weight: 600;
@@ -2424,7 +2430,7 @@ body.has-cartbar .whatsapp-button,
 .pc-cartbar__sub {
   display: block;
   font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.75);
   margin-top: 2px;
 }
 
@@ -2433,97 +2439,14 @@ body.has-cartbar .whatsapp-button,
   font-weight: 700;
 }
 
-.pc-cartbar__track {
-  position: relative;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  margin-top: 7px;
-  overflow: visible;
-}
-
-.pc-cartbar__fill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #49e395 0%, #c4fb5a 100%);
-  transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 0 8px rgba(73, 227, 149, 0.6);
-}
-
-.pc-cartbar__mark {
-  position: absolute;
-  top: 50%;
-  width: 12px;
-  height: 12px;
-  margin-left: -6px;
-  border-radius: 50%;
-  background: #242426;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  transform: translateY(-50%);
-  z-index: 2;
-  transition: all 0.25s ease;
-}
-
-.pc-cartbar__mark[data-pc-mark="ship"] {
-  left: 60%;
-}
-
-.pc-cartbar__mark[data-pc-mark="gift"] {
-  right: 0;
-  left: auto;
-  margin-left: 0;
-}
-
-.pc-cartbar__mark.is-hit {
-  background: #c4fb5a !important;
-  border-color: #242426 !important;
-  box-shadow: 0 0 0 2px #c4fb5a, 0 0 10px rgba(196, 251, 90, 0.8) !important;
-}
-
-.pc-cartbar__labels {
-  position: relative;
-  height: 14px;
-  margin-top: 4px;
-  font-size: 10.5px;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 600;
-}
-
-.pc-cartbar__labels span {
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-  transition: color 0.2s ease, font-weight 0.2s ease;
-}
-
-.pc-cartbar__labels span[data-pc-label="ship"] {
-  left: 60%;
-  transform: translateX(-50%);
-}
-
-.pc-cartbar__labels span[data-pc-label="gift"] {
-  right: 0;
-  left: auto;
-  transform: none;
-  text-align: right;
-}
-
-.pc-cartbar__labels span.is-hit {
-  color: #c4fb5a !important;
-  font-weight: 700 !important;
-}
-
 .pc-cartbar .pc-btn,
 .pc-cartbar__btn {
+  grid-area: btn;
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 11px 22px !important;
+  padding: 10px 20px !important;
   border-radius: 999px !important;
   background: #c4fb5a !important;
   color: #242426 !important;
@@ -2556,10 +2479,102 @@ body.has-cartbar .whatsapp-button,
   transform: translateX(3px);
 }
 
+.pc-cartbar__track {
+  grid-area: track;
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  margin-top: 2px;
+  overflow: visible;
+}
+
+.pc-cartbar__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: #49e395 !important;
+  background: linear-gradient(90deg, #49e395 0%, #c4fb5a 100%) !important;
+  box-shadow: 0 0 10px rgba(73, 227, 149, 0.9), 0 0 4px rgba(196, 251, 90, 0.8) !important;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.pc-cartbar__mark {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: #242426;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: all 0.25s ease;
+}
+
+.pc-cartbar__mark[data-pc-mark="ship"] {
+  left: 60%;
+}
+
+.pc-cartbar__mark[data-pc-mark="gift"] {
+  right: 0;
+  left: auto;
+  margin-left: 0;
+}
+
+.pc-cartbar__mark.is-hit {
+  background: #c4fb5a !important;
+  border-color: #242426 !important;
+  box-shadow: 0 0 0 2px #49e395, 0 0 10px rgba(196, 251, 90, 0.9) !important;
+}
+
+.pc-cartbar__labels {
+  grid-area: labels;
+  position: relative;
+  width: 100%;
+  height: 16px;
+  margin-top: 2px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+}
+
+.pc-cartbar__labels span {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.pc-cartbar__labels span[data-pc-label="ship"] {
+  left: 60%;
+  transform: translateX(-50%);
+}
+
+.pc-cartbar__labels span[data-pc-label="gift"] {
+  right: 0;
+  left: auto;
+  transform: none;
+  text-align: right;
+}
+
+.pc-cartbar__labels span.is-hit {
+  color: #c4fb5a !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 8px rgba(196, 251, 90, 0.6);
+}
+
 @media (max-width: 600px) {
   body.has-cartbar .whatsapp-button,
   .whatsapp-button.whatsapp-button--raised {
-    bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(125px + env(safe-area-inset-bottom, 0px)) !important;
     right: 14px !important;
     width: 58px !important;
     height: 58px !important;
@@ -2570,8 +2585,9 @@ body.has-cartbar .whatsapp-button,
     max-width: 440px !important;
     left: 50% !important;
     bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
-    padding: 10px 14px !important;
-    gap: 10px !important;
+    padding: 12px 14px 10px !important;
+    row-gap: 8px !important;
+    column-gap: 10px !important;
     border-radius: 20px !important;
     transform: translate(-50%, 150%);
   }
@@ -2581,10 +2597,8 @@ body.has-cartbar .whatsapp-button,
   }
 
   .pc-cartbar .pc-cartbar__btn {
-    display: inline-flex !important;
-    padding: 9px 15px !important;
+    padding: 8px 14px !important;
     font-size: 12.5px !important;
-    border-radius: 999px !important;
   }
 
   .pc-cartbar__msg {
@@ -2596,8 +2610,7 @@ body.has-cartbar .whatsapp-button,
   }
 
   .pc-cartbar__track {
-    height: 5px;
-    margin-top: 5px;
+    height: 7px;
   }
 
   .pc-cartbar__labels {
